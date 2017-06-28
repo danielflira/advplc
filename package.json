@@ -1,0 +1,17 @@
+{
+  "name": "advplc",
+  "version": "1.0.0",
+  "description": "advpl compiler wrap",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "napa https://github.com/killerall/advpl-vscode"
+  },
+  "author": "Daniel Lira",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.10.0",
+    "napa": "^3.0.0",
+    "prompt-wizard": "^1.2.1"
+  }
+}
