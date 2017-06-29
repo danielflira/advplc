@@ -13,5 +13,8 @@
     "commander": "^2.10.0",
     "napa": "^3.0.0",
     "prompt-wizard": "^1.2.1"
+  },
+  "bin": {
+    "advplc": "./index.js"
   }
 }
