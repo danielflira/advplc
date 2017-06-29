@@ -97,7 +97,6 @@ var advplc = {
     },
 
     'getCompileInfo': function() {
-        console.log(configure);
         return JSON.stringify(configure);
     }
 };
