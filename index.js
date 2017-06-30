@@ -65,9 +65,13 @@ var advplc = {
         let bridge = this.getBridge();
         var last_data = '';
 
+        if ( fs.statSync(filename).isDirectory() ) {
+            filename += String.fromCharCode(170) + 
+                    configure.compileFolderRegex;
+        }
+
         args.push('--compileInfo='.concat(this.getCompileInfo()));
         args.push('--source='.concat(filename));
-
         child = child_process.spawn(bridge, args);
 
         child.stdout.on('data', function(data) {
@@ -79,7 +83,7 @@ var advplc = {
                 callback(JSON.parse(last_data));
             } else {
                 console.log('ended with no response from bridge '
-                    .concat(child.exitCode));
+                        .concat(child.exitCode));
             }
         });
     },
