@@ -199,7 +199,7 @@ function wizardAdd1(parameters, configure) {
 
         for ( let i = 0; i < configure.environments.length; i++ ) {
             let cfgenv = configure.environments[i];
-            if ( cfgenv.environment.toLowerCase() == quiz.environment ) {
+            if ( cfgenv.environment == quiz.environment ) {
                 environment = cfgenv;
                 add = false;
                 break;
@@ -324,10 +324,10 @@ function saveConfigure(configure) {
 
 
 program
-    .arguments('<resource>')
     .option('-e, --env <env>', 'environment from .advplc to compile')
     .option('--cfg', 'configure .advplc generic options')
     .option('--add', 'add .advplc environment options')
+    .arguments('[resource]')
     .action(function(resource) {
         advplc.loadConfigure(function(configure) {
             if ( program.add || program.cfg ) {
