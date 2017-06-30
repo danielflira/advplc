@@ -47,7 +47,7 @@ var advplc = {
         let child = null;
         let last_data = '';
 
-        args.push("--CipherPassword="+password);
+        args.push('--CipherPassword='.concat(password));
         child = child_process.spawn(this.getBridge(), args);
         
         child.stdout.on('data', function(data) {
@@ -65,8 +65,8 @@ var advplc = {
         let bridge = this.getBridge();
         var last_data = '';
 
-        args.push("--compileInfo=".concat(this.getCompileInfo()));
-        args.push("--source=".concat(filename));
+        args.push('--compileInfo='.concat(this.getCompileInfo()));
+        args.push('--source='.concat(filename));
 
         child = child_process.spawn(bridge, args);
 
@@ -78,7 +78,8 @@ var advplc = {
             if ( last_data ) {
                 callback(JSON.parse(last_data));
             } else {
-                console.log('ended with no response from bridge');
+                console.log('ended with no response from bridge '
+                    .concat(child.exitCode));
             }
         });
     },
@@ -325,7 +326,7 @@ program
     .option('--add', 'add .advplc environment options')
     .action(function(resource) {
         advplc.loadConfigure(function(configure) {
-            if ( program.add ||program.cfg ) {
+            if ( program.add || program.cfg ) {
                 wizardCfg(program, configure);
             } else {
                 compileResource(program, configure, resource);
