@@ -65,17 +65,21 @@ var advplc = {
         let bridge = this.getBridge();
         var last_data = '';
 
-        args.push("--compileInfo=" + this.getCompileInfo());
-        args.push("--source=" + filename);
+        args.push("--compileInfo=".concat(this.getCompileInfo()));
+        args.push("--source=".concat(filename));
 
         child = child_process.spawn(bridge, args);
 
         child.stdout.on('data', function(data) {
-            last_data +=  data;
+            last_data += data;
         });
 
         child.on('exit', function() {
-            callback(JSON.parse(last_data));
+            if ( last_data ) {
+                callback(JSON.parse(last_data));
+            } else {
+                console.log('ended with no response from bridge');
+            }
         });
     },
 
@@ -104,7 +108,7 @@ var advplc = {
 
 function compileResource(parameters, configure, resource) {
     if ( ! parameters.env ) {
-        return;
+        console.log('you must inform environment to compile, see --env')
     }
 
     configure.selectedEnvironment = parameters.env;
@@ -321,8 +325,11 @@ program
     .option('--add', 'add .advplc environment options')
     .action(function(resource) {
         advplc.loadConfigure(function(configure) {
-            wizardCfg(program, configure);
-            compileResource(program, configure, resource);
+            if ( program.add ||program.cfg ) {
+                wizardCfg(program, configure);
+            } else {
+                compileResource(program, configure, resource);
+            }
         });
     })
     .parse(process.argv)
